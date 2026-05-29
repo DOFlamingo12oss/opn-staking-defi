@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPN Staking dApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid #334155; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="glass-panel p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-emerald-400 mb-2">OPN Staking</h1>
+            <p class="text-slate-400 text-sm">Season 1 Builders Submission</p>
+        </div>
+
+        <div class="bg-slate-800 rounded-xl p-4 mb-6 border border-slate-700">
+            <p class="text-slate-400 text-sm mb-1">Total Value Locked (TVL)</p>
+            <h2 class="text-2xl font-bold text-white">1,250,000 OPN</h2>
+        </div>
+
+        <button id="connectWalletBtn" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition duration-300 shadow-lg shadow-emerald-500/30 mb-4">
+            Connect MetaMask
+        </button>
+
+        <p id="walletAddress" class="text-emerald-400 text-sm hidden font-mono break-all bg-emerald-900/30 p-2 rounded"></p>
+    </div>
+
+    <script>
+        const connectBtn = document.getElementById('connectWalletBtn');
+        const walletAddress = document.getElementById('walletAddress');
+
+        connectBtn.addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const account = accounts[0];
+                    connectBtn.innerText = "Wallet Connected";
+                    connectBtn.classList.replace('bg-emerald-500', 'bg-slate-600');
+                    connectBtn.classList.replace('hover:bg-emerald-600', 'hover:bg-slate-700');
+                    walletAddress.innerText = account;
+                    walletAddress.classList.remove('hidden');
+                } catch (error) {
+                    console.error("User denied account access");
+                }
+            } else {
+                alert('Tolong install ekstensi MetaMask di browser Anda!');
+            }
+        });
+    </script>
+</body>
+</html>
